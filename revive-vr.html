@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ReVive – Hotspots 360</title>
+
+    <!-- A-FRAME Library -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #4a3c29;
+    }
+  </style>
+</head>
+
+<body>
+  <a-scene>
+
+    <!-- ASSETS -->
+    <a-assets>
+      <!-- FOTO 360 -->
+      <img id="revive" src="resources/img-revive.png">
+
+      <!-- AUDIO REMOTO -->
+      <audio id="audio-remoto" crossorigin="anonymous"
+             src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav"></audio>
+    </a-assets>
+
+    <!-- CÁMARA + CURSOR -->
+    <a-entity id="rig" position="0 1.6 0">
+      <a-camera fov="100" look-controls>
+        <a-cursor id="cursor"
+                  color="#991015"
+                  fuse="false"
+                  raycaster="objects: .hotspot">
+        </a-cursor>
+      </a-camera>
+    </a-entity>
+
+    <!-- CIELO 360 -->
+    <a-sky id="image-360" radius="50" src="#revive"></a-sky>
+
+    <!-- 🔊 HOTSPOT 1: AUDIO (IZQUIERDA) -->
+    <a-sphere id="hotspot-sonido"
+              class="hotspot"
+              radius="0.18"
+              color="#ffcc00"
+              position="-0.6 1.5 -3">
+    </a-sphere>
+
+    <!-- 💬 HOTSPOT 2: TEXTO HOLA (CENTRO) -->
+    <a-sphere id="hotspot-texto"
+              class="hotspot"
+              radius="0.18"
+              color="#00ff99"
+              position="0 1.5 -3">
+    </a-sphere>
+
+    <a-text id="mensaje-hola"
+            value="Hola"
+            position="0 2 -3"
+            align="center"
+            color="#FFFFFF"
+            width="2"
+            visible="false">
+    </a-text>
+
+    <!-- 🧿 HOTSPOT 3: IR A ESCENA AR (DERECHA) -->
+    <a-sphere id="hotspot-marker"
+              class="hotspot"
+              radius="0.18"
+              color="#ff6666"
+              position="0.6 1.5 -3">
+    </a-sphere>
+
+    <!-- Etiqueta sobre el hotspot rojo -->
+    <a-text value="Ver en RA (marker Hiro)"
+            position="0.6 1.95 -3"
+            align="center"
+            color="#FFD5D5"
+            width="2">
+    </a-text>
+
+    <!-- ENTIDAD DE SONIDO -->
+    <a-entity id="sonido-entity"
+              sound="src: #audio-remoto; autoplay: false; positional: false">
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    window.addEventListener('load', function () {
+      var hotspotSonido = document.querySelector('#hotspot-sonido');
+      var hotspotTexto  = document.querySelector('#hotspot-texto');
+      var hotspotMarker = document.querySelector('#hotspot-marker');
+
+      var mensajeHola   = document.querySelector('#mensaje-hola');
+      var sonidoEntity  = document.querySelector('#sonido-entity');
+
+      // Animación de escala en hover para los hotspots
+      function addHoverScale(el) {
+        el.addEventListener('mouseenter', function () {
+          el.setAttribute('scale', '1.4 1.4 1.4');
+        });
+        el.addEventListener('mouseleave', function () {
+          el.setAttribute('scale', '1 1 1');
+        });
+      }
+      addHoverScale(hotspotSonido);
+      addHoverScale(hotspotTexto);
+      addHoverScale(hotspotMarker);
+
+      // 🔊 HOTSPOT 1: SONIDO
+      hotspotSonido.addEventListener('mouseenter', function () {
+        if (sonidoEntity.components.sound) {
+          sonidoEntity.components.sound.stopSound();
+          sonidoEntity.components.sound.playSound();
+        }
+      });
+
+      hotspotSonido.addEventListener('mouseleave', function () {
+        if (sonidoEntity.components.sound) {
+          sonidoEntity.components.sound.stopSound();
+        }
+      });
+
+      // 💬 HOTSPOT 2: TEXTO "Hola"
+      hotspotTexto.addEventListener('mouseenter', function () {
+        mensajeHola.setAttribute('visible', true);
+      });
+
+      hotspotTexto.addEventListener('mouseleave', function () {
+        mensajeHola.setAttribute('visible', false);
+      });
+
+      // 🧿 HOTSPOT 3: ABRIR ESCENA AR POR HOVER
+      hotspotMarker.addEventListener('mouseenter', function () {
+        window.location.href = 'revive-ar.html';
+      });
+    });
+  </script>
+</body>
+</html>
