@@ -66,7 +66,7 @@
     </a-assets>
 
     <!-- Scene background -->
-    <a-sky src="#parchmentTex" rotation="0 -90 0"></a-sky>
+    <a-sky src="#parchmentTex" rotation="180 -90 90"></a-sky>
 
     <!-- Lights -->
     <a-light type="ambient" intensity="0.35" color="#ffefd5"></a-light>
@@ -77,13 +77,13 @@
     <a-entity position="0 2.35 -2">
 
       <!-- Subtle border (optional, used as a frame) -->
-      <a-plane width="2.39" height="0.8" position="0 0.30 -0.002"
-        material="color:#2a1f14; transparent:true; opacity:0.25;"></a-plane>
+      <a-circle radius="1" position="0 0.8 -0.002"
+        material="color:#091719; transparent:true; opacity:0.7;"></a-circle>
 
       <!-- Handwritten-style text -->
       <a-entity id="reviveText"
-        troika-text="value: ; fontSize: 0.07; color: #877E6D; align: center; maxWidth: 1.75; lineHeight: 1.30;"
-        position="0 0.30 0.01">
+        troika-text="value: ; fontSize: 0.07; color: #AE8636; align: center; maxWidth: 1.75; lineHeight: 1.30;"
+        position="0 0.4 0.01">
       </a-entity>
 
     </a-entity>
@@ -113,7 +113,7 @@
 
     <!-- Camera -->
     <a-camera position="0 1.6 0">
-      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#BC965B">
+      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#AE8636">
       </a-cursor>
     </a-camera>
 
