@@ -2,68 +2,44 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>ReVive – Recuerdos en Realidad Mixta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- A-FRAME Library -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <!-- Troika Text: high-quality text rendering with real fonts (supports accents and Unicode) -->
+  <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const textEl = document.querySelector('#reviveText');
+      if (!textEl) return;
+
+      const text =
+        "RE·VIVE\n\n" +
+        "Adéntrate en este libro.\n" +
+        "Cada página guarda un recuerdo;\n" +
+        "cada recuerdo puede volver a habitarse.\n\n" +
+        "Este libro no se lee:\n" +
+        "se atraviesa.";
+
+      // Troika uses the "troika-text" component
+      textEl.setAttribute('troika-text', 'value', text);
+    });
+  </script>
+
 
   <style>
     html,
     body {
-      width:100%;
-      height:100%;
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #4a3c29;
-      /* Marrón viejo */
       color: #fff;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Presentación */
-    #intro {
-      position: relative;
-      text-align: center;
-      max-width: 600px;
-      z-index: 10;
-      font-size: 1rem;
-      line-height: 1.4;
-      background: rgba(40, 30, 10, 0.55);
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
-    }
-
-    #intro h1 {
-      margin: 0 0 0.5rem;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    #intro p {
-      margin: 0.15rem 0;
-      font-weight: 300;
-    }
-
-    #photo-panel label {
-      font-size: 0.75rem;
-      opacity: 0.8;
-    }
-
-    #photo-frame {
-      border: 1px solid red;
-      width: 220px;
-      height: 150px;
-      border: none;
-      background: #2a1f14;
-      border-radius: 8px;
       overflow: hidden;
     }
 
@@ -88,13 +64,16 @@
       background: #2a1f14;
       border-radius: 8px;
       overflow: hidden;
+      position: relative;
     }
 
     #VRareaFrame {
       width: 100%;
       height: 100%;
+      border: 0;
     }
 
+    /* “botón” invisible */
     #VRareaLink {
       position: absolute;
       right: 16px;
@@ -104,69 +83,65 @@
       background-color: rgba(0, 0, 0, 0.2);
       cursor: pointer;
     }
-
-    #VRareaFooter p {
-      font-size: 14px;
-      color: #fff;
-      text-align: center;
-    }
   </style>
 </head>
 
 <body>
+  <!-- Scene -->
+  <a-scene embedded embedded renderer="colorManagement: true; physicallyCorrectLights: true">
 
-    <!-- Scene -->
-    <a-scene embedded>
+    <!-- Assets -->
+    <a-assets>
+      <a-asset-item id="photo-album-obj" src="resources/photo-album.obj"></a-asset-item>
+      <a-asset-item id="photo-album-mtl" src="resources/photo-album.mtl"></a-asset-item>
+      <img id="parchmentTex" src="resources/ph-cover-texture.jpg" />
+    </a-assets>
 
-          <!-- Texto presentación -->
-    <div id="intro">
-      <h1>ReVive</h1>
-      <p>Convierte recuerdos en experiencias de Realidad Mixta.</p>
-      <p>Explora tus fotografías como un espacio habitable.</p>
-      <p>Un libro inmersivo donde cada página es un momento único.</p>
-      <p>Disponible desde el navegador, sin instalaciones.</p>
-    </div>
+    <!-- Scene background -->
+    <a-sky src="#parchmentTex" rotation="0 -90 0"></a-sky>
 
-      <!-- Assets-->
-      <a-assets>
-        <a-asset-item id="photo-album" src="resources/photo-album.obj"></a-asset-item>
-        <a-asset-item id="photo-album-mtl" src="resources/photo-album.mtl"></a-asset-item>
-      </a-assets>
-      <!-- End Assets-->
+    <!-- Lights -->
+    <a-light type="ambient" intensity="0.35" color="#ffefd5"></a-light>
+    <a-light type="directional" intensity="0.55" position="1 2 1"></a-light>
 
-      <!--Photo album-->
-      <a-entity
-        obj-model="obj:#photo-album;mtl: #lotus-mtl"
-        position="0 0.5 -3"
-        rotation="0 0 0"
-        scale="0.03 0.03 0.03"
-      >
+
+    <!-- Parchment panel (manuscript style) -->
+    <a-entity position="0 2.35 -2">
+
+      <!-- Subtle border (optional, used as a frame) -->
+      <a-plane width="2.39" height="1.15" position="0 0.30 -0.002"
+        material="color:#2a1f14; transparent:true; opacity:0.25;"></a-plane>
+
+      <!-- Handwritten-style text -->
+      <a-entity id="reviveText"
+        troika-text="value: ; fontSize: 0.07; color: #CAB99D; align: center; maxWidth: 1.75; lineHeight: 1.35;"
+        position="0 0.30 0.01">
       </a-entity>
-      <!--End Photo album-->
 
-    <!-- Camera -->
-      <a-camera position="0 0 0">
-        <a-cursor color="#420501"></a-cursor>
-      </a-camera>
-      <!-- End Camera-->
-    <!--End Scene -->
-  </div>
+    </a-entity>
+
+    <!-- Photo album -->
+    <a-entity id="photoAlbum" obj-model="obj:#photo-album-obj; mtl:#photo-album-mtl" position="0 11 -2"
+      rotation="4 90 45" scale="0.7 0.7 0.7">
+    </a-entity>
 
 
-  <!-- iframe-->
+    <!-- Cámara -->
+    <a-camera position="0 1.6 0">
+      <a-cursor color="#420501"></a-cursor>
+    </a-camera>
+
+  </a-scene>
+
+
+  <!-- iframe -->
   <div id="VRareaPage">
     <div id="VRarea">
       <iframe id="VRareaFrame" src="revive-vr.html"></iframe>
-      <div id="VRareaLink" onClick="javascript:document.location='revive_vr.html'"></div>
-    </div>
-    <div id="VRareaFooter">
-      <p>Click the glasses to enter the 360 video</p>
+      <div id="VRareaLink" onclick="document.location='revive-vr.html'"></div>
     </div>
   </div>
-  <!--End iframe-->
 
-
-</a-scene>
 </body>
 
 </html>
