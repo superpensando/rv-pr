@@ -90,14 +90,13 @@
 
 
 
-    <a-entity position="0 0 0">
+    <a-entity position="0 0 0" scale="1 1 1"
+      animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 1.04 1 1.04">
+   >
 
       <!-- Photo album -->
       <a-entity id="photoAlbum" obj-model="obj:#photo-album-obj; mtl:#photo-album-mtl" position="0 11 -2"
-        rotation="4 90 45" scale="0.7 0.7 0.7"
-        animation__float="property: position; dir: alternate; dur: 1800; easing: easeInOutSine; loop: true; to: 0 11.15 -2"
-        animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 0.715 0.7 0.715">
-        >
+        rotation="4 90 45" scale="0.7 0.7 0.7">
       </a-entity>
       <a-entity id="photoAlbumTitle" troika-text="value: RE*VIVE; fontSize: 0.045; color: #15110A; align: center;"
         position="-0.13 1.55 -0.5" rotation="-40 40 -30">
@@ -114,7 +113,7 @@
 
     <!-- Camera -->
     <a-camera position="0 1.6 0">
-      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#15110A">
+      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#BC965B">
       </a-cursor>
     </a-camera>
 
