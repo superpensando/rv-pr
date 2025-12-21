@@ -17,7 +17,6 @@
       if (!textEl) return;
 
       const text =
-        "RE·VIVE\n\n" +
         "Adéntrate en este libro.\n" +
         "Cada página guarda un recuerdo;\n" +
         "cada recuerdo puede volver a habitarse.\n\n" +
@@ -26,6 +25,15 @@
 
       // Troika uses the "troika-text" component
       textEl.setAttribute('troika-text', 'value', text);
+    });
+
+    AFRAME.registerComponent('go-to-vr', {
+      schema: { url: { type: 'string' } },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          window.location.href = this.data.url;
+        });
+      }
     });
   </script>
 
@@ -42,59 +50,19 @@
       color: #fff;
       overflow: hidden;
     }
-
-    #VRareaPage {
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      background: rgba(30, 20, 5, 0.7);
-      padding: 0.7rem;
-      border-radius: 10px;
-      backdrop-filter: blur(4px);
-    }
-
-    #VRarea {
-      width: 260px;
-      height: 150px;
-      border: none;
-      background: #2a1f14;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    #VRareaFrame {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    /* “botón” invisible */
-    #VRareaLink {
-      position: absolute;
-      right: 16px;
-      bottom: 18px;
-      width: 53px;
-      height: 30px;
-      background-color: rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-    }
   </style>
 </head>
 
 <body>
   <!-- Scene -->
-  <a-scene embedded embedded renderer="colorManagement: true; physicallyCorrectLights: true">
+  <a-scene embedded renderer="colorManagement: true; physicallyCorrectLights: true">
 
     <!-- Assets -->
     <a-assets>
       <a-asset-item id="photo-album-obj" src="resources/photo-album.obj"></a-asset-item>
       <a-asset-item id="photo-album-mtl" src="resources/photo-album.mtl"></a-asset-item>
       <img id="parchmentTex" src="resources/ph-cover-texture.jpg" />
+      <img id="vrPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
     </a-assets>
 
     <!-- Scene background -->
@@ -109,38 +77,48 @@
     <a-entity position="0 2.35 -2">
 
       <!-- Subtle border (optional, used as a frame) -->
-      <a-plane width="2.39" height="1.15" position="0 0.30 -0.002"
+      <a-plane width="2.39" height="0.8" position="0 0.30 -0.002"
         material="color:#2a1f14; transparent:true; opacity:0.25;"></a-plane>
 
       <!-- Handwritten-style text -->
       <a-entity id="reviveText"
-        troika-text="value: ; fontSize: 0.07; color: #CAB99D; align: center; maxWidth: 1.75; lineHeight: 1.35;"
+        troika-text="value: ; fontSize: 0.07; color: #877E6D; align: center; maxWidth: 1.75; lineHeight: 1.30;"
         position="0 0.30 0.01">
       </a-entity>
 
     </a-entity>
 
-    <!-- Photo album -->
-    <a-entity id="photoAlbum" obj-model="obj:#photo-album-obj; mtl:#photo-album-mtl" position="0 11 -2"
-      rotation="4 90 45" scale="0.7 0.7 0.7">
+
+
+    <a-entity position="0 0 0">
+
+      <!-- Photo album -->
+      <a-entity id="photoAlbum" obj-model="obj:#photo-album-obj; mtl:#photo-album-mtl" position="0 11 -2"
+        rotation="4 90 45" scale="0.7 0.7 0.7"
+        animation__float="property: position; dir: alternate; dur: 1800; easing: easeInOutSine; loop: true; to: 0 11.15 -2"
+        animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 0.715 0.7 0.715">
+        >
+      </a-entity>
+      <a-entity id="photoAlbumTitle" troika-text="value: RE*VIVE; fontSize: 0.045; color: #15110A; align: center;"
+        position="-0.13 1.55 -0.5" rotation="-40 40 -30">
+      </a-entity>
+      <a-entity id="photoAlbumText" troika-text="value: Navidades 1953; fontSize: 0.035; color: #15110A; align: center;"
+        position="0.26 1.53 -0.99" rotation="-40 0 0">
+      </a-entity>
+
+      <a-plane id="photoAlbumPhoto" class="clickable" go-to-vr="url: revive-vr.html" position="0.3 1.40 -1"
+        rotation="-40 0 0" width="1.5" height="0.8" scale="0.28 0.28 0.28" material="shader: flat; src: #vrPreview;"
+        side="double">
+      </a-plane>
     </a-entity>
 
-
-    <!-- Cámara -->
+    <!-- Camera -->
     <a-camera position="0 1.6 0">
-      <a-cursor color="#420501"></a-cursor>
+      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#15110A">
+      </a-cursor>
     </a-camera>
 
   </a-scene>
-
-
-  <!-- iframe -->
-  <div id="VRareaPage">
-    <div id="VRarea">
-      <iframe id="VRareaFrame" src="revive-vr.html"></iframe>
-      <div id="VRareaLink" onclick="document.location='revive-vr.html'"></div>
-    </div>
-  </div>
 
 </body>
 
