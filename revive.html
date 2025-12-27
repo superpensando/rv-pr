@@ -13,7 +13,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const textEl = document.querySelector('#reviveText');
+      const textEl = document.querySelector('#reviveIntroText');
       if (!textEl) return;
 
       const text =
@@ -36,18 +36,23 @@
       }
     });
   </script>
-
-
   <style>
+    :root {
+      --text-color-primary: #AE8636;
+      --text-color-secondary: #15110A;
+      --text-color-tertiary: #fff;
+      --background-color-primary: #4a3c29;
+    }
+
     html,
     body {
       width: 100%;
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #4a3c29;
-      color: #fff;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--background-color-primary);
+      color: var(--text-color-tertiary);
       overflow: hidden;
     }
   </style>
@@ -55,35 +60,36 @@
 
 <body>
   <!-- Scene -->
-  <a-scene embedded renderer="colorManagement: true; physicallyCorrectLights: true">
+  <a-scene renderer="colorManagement: true; physicallyCorrectLights: true">
 
     <!-- Assets -->
     <a-assets>
-      <a-asset-item id="photo-album-obj" src="resources/photo-album.obj"></a-asset-item>
-      <a-asset-item id="photo-album-mtl" src="resources/photo-album.mtl"></a-asset-item>
-      <img id="parchmentTex" src="resources/ph-cover-texture.jpg" />
-      <img id="vrPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
+      <a-asset-item id="vintageBook-obj" src="resources/photo-album.obj"></a-asset-item>
+      <a-asset-item id="vintageBook-mtl" src="resources/photo-album.mtl"></a-asset-item>
+      <img id="vintageBookCover" src="resources/ph-cover-texture.jpg" />
+      <img id="photoPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
     </a-assets>
 
     <!-- Scene background -->
-    <a-sky src="#parchmentTex" rotation="180 -90 90"></a-sky>
+    <a-sky src="#vintageBookCover" rotation="180 -90 90"></a-sky>
 
     <!-- Lights -->
-    <a-light type="ambient" intensity="0.35" color="#ffefd5"></a-light>
-    <a-light type="directional" intensity="0.55" position="1 2 1"></a-light>
+    <a-light type="ambient" intensity="0.75" color="#fff;"></a-light>
+    <a-light type="directional" intensity="0.75" position="1 1.8 1"></a-light>
 
 
-    <!-- Parchment panel (manuscript style) -->
+    <!-- Revive Introduction -->
     <a-entity position="0 2.35 -2">
 
-      <!-- Subtle border (optional, used as a frame) -->
-      <a-circle radius="1" position="0 0.8 -0.002"
-        material="color:#091719; transparent:true; opacity:0.7;"></a-circle>
+      <!-- Background Introduction-->
+      <a-circle radius="0.5" scale="1.8 1 1.5" position="0 0.25 -0.002"
+        material="color:#15110A; transparent:true; opacity:0.7">
+      </a-circle>
 
-      <!-- Handwritten-style text -->
-      <a-entity id="reviveText"
+      <!-- Text Introduction-->
+      <a-entity id="reviveIntroText"
         troika-text="value: ; fontSize: 0.07; color: #AE8636; align: center; maxWidth: 1.75; lineHeight: 1.30;"
-        position="0 0.4 0.01">
+        position="0 0.25 0.01">
       </a-entity>
 
     </a-entity>
@@ -91,29 +97,27 @@
 
 
     <a-entity position="0 0 0" scale="1 1 1"
-      animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 1.04 1 1.04">
-   >
+      animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 1.03 1 1.03">
 
       <!-- Photo album -->
-      <a-entity id="photoAlbum" obj-model="obj:#photo-album-obj; mtl:#photo-album-mtl" position="0 11 -2"
+      <a-entity id="photoAlbum" obj-model="obj:#vintageBook-obj; mtl:#vintageBook-mtl" position="0 11 -2"
         rotation="4 90 45" scale="0.7 0.7 0.7">
       </a-entity>
-      <a-entity id="photoAlbumTitle" troika-text="value: RE*VIVE; fontSize: 0.045; color: #15110A; align: center;"
+      <a-entity id="photoAlbumTitle" troika-text="value: RE-VIVE; fontSize: 0.045; color: #15110A; align: center;"
         position="-0.13 1.55 -0.5" rotation="-40 40 -30">
       </a-entity>
       <a-entity id="photoAlbumText" troika-text="value: Navidades 1953; fontSize: 0.035; color: #15110A; align: center;"
-        position="0.26 1.53 -0.99" rotation="-40 0 0">
+        position="0.26 1.54 -0.99" rotation="-40 0 0">
       </a-entity>
-
       <a-plane id="photoAlbumPhoto" class="clickable" go-to-vr="url: revive-vr.html" position="0.3 1.40 -1"
-        rotation="-40 0 0" width="1.5" height="0.8" scale="0.28 0.28 0.28" material="shader: flat; src: #vrPreview;"
+        rotation="-40 0 0" width="1.6" height="0.9" scale="0.28 0.28 0.28" material="shader: flat; src: #photoPreview;"
         side="double">
       </a-plane>
     </a-entity>
 
     <!-- Camera -->
     <a-camera position="0 1.6 0">
-      <a-cursor rayOrigin="mouse" raycaster="objects: .clickable" color="#AE8636">
+      <a-cursor color="#AE8636">
       </a-cursor>
     </a-camera>
 
