@@ -69,14 +69,16 @@
       <img id="vintageBookCover" src="resources/ph-cover-texture.jpg" />
       <img id="photoPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
     </a-assets>
+    <!-- Emd Assets -->
 
     <!-- Scene background -->
     <a-sky src="#vintageBookCover" rotation="180 -90 90"></a-sky>
+    <!-- End Scene background -->
 
     <!-- Lights -->
     <a-light type="ambient" intensity="0.75" color="#fff;"></a-light>
     <a-light type="directional" intensity="0.75" position="1 1.8 1"></a-light>
-
+    <!-- End Lights -->
 
     <!-- Revive Introduction -->
     <a-entity position="0 2.35 -2">
@@ -93,9 +95,9 @@
       </a-entity>
 
     </a-entity>
+    <!-- End Revive Introduction -->
 
-
-
+    <!--Revive Photo Album-->
     <a-entity position="0 0 0" scale="1 1 1"
       animation__pulse="property: scale; dir: alternate; dur: 1200; easing: easeInOutSine; loop: true; to: 1.03 1 1.03">
 
@@ -114,14 +116,16 @@
         side="double">
       </a-plane>
     </a-entity>
+    <!--End Revive Photo Album-->
 
     <!-- Camera -->
     <a-camera position="0 1.6 0">
       <a-cursor color="#AE8636">
       </a-cursor>
     </a-camera>
-
+    <!--End Camera -->
   </a-scene>
+  <!--End Scene -->
 
 </body>
 
