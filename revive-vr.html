@@ -1,149 +1,328 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>ReVive – Hotspots 360</title>
+<html lang="en">
 
-    <!-- A-FRAME Library -->
+<head>
+  <meta charset="UTF-8" />
+  <title>Christmas 1953 · VR Scene</title>
+
+  <!-- A-FRAME Library -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <!-- Troika Text -->
+  <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
 
   <style>
+    :root {
+      --text-color-primary: #AE8636;
+      --text-color-secondary: #1A1407;
+      --text-color-tertiary: #ffffff;
+      --background-color-header: #4a3c29;
+    }
+
     html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
-      height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--background-color-header);
+      color: var(--text-color-tertiary);
       overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #4a3c29;
     }
   </style>
 </head>
 
 <body>
-  <a-scene>
 
-    <!-- ASSETS -->
-    <a-assets>
-      <!-- FOTO 360 -->
-      <img id="revive" src="resources/img-revive.png">
+<a-scene renderer="colorManagement: true; antialias: true;">
 
-      <!-- AUDIO REMOTO -->
-      <audio id="audio-remoto" crossorigin="anonymous"
-             src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav"></audio>
-    </a-assets>
+  <!-- Assets -->
+  <a-assets>
+    <img id="photoIntroductionBgTexture" src="resources/ph-page-texture.jpg" />
+    <img id="imgRevive" src="resources/img-revive.png" />
+    <audio id="audioRain" src="resources/audios/rain.wav"></audio>
+    <audio id="audioChristmasSound" src="resources/audios/eltamborilero.mp3"></audio>
+  </a-assets>
+  <!-- End Assets -->
 
-    <!-- CÁMARA + CURSOR -->
-    <a-entity id="rig" position="0 1.6 0">
-      <a-camera fov="100" look-controls>
-        <a-cursor id="cursor"
-                  color="#991015"
-                  fuse="false"
-                  raycaster="objects: .hotspot">
-        </a-cursor>
-      </a-camera>
-    </a-entity>
+  <!-- Scene background -->
+  <a-sky id="skyImage360"
+         src="#imgRevive"
+         radius="50"
+         rotation="0 -70 0"
+         material="shader: flat">
+  </a-sky>
+  <!-- End Scene background -->
 
-    <!-- CIELO 360 -->
-    <a-sky id="image-360" radius="50" src="#revive"></a-sky>
 
-    <!-- 🔊 HOTSPOT 1: AUDIO (IZQUIERDA) -->
-    <a-sphere id="hotspot-sonido"
-              class="hotspot"
-              radius="0.18"
-              color="#ffcc00"
-              position="-0.6 1.5 -3">
-    </a-sphere>
+  <!-- Hostpots -->
+  <!-- Hostpot Rain -->
+  <a-sphere id="hotspotRain"
+            radius="0.18"
+            position="-5.7 2.2 -3"
+            material="color: #ffffff; opacity: 0.5; transparent: true"
+            animation="property: material.opacity; from: 0.1; to: 0.4; dur: 1200; dir: alternate; loop: true">
+  </a-sphere>
 
-    <!-- 💬 HOTSPOT 2: TEXTO HOLA (CENTRO) -->
-    <a-sphere id="hotspot-texto"
-              class="hotspot"
-              radius="0.18"
-              color="#00ff99"
-              position="0 1.5 -3">
-    </a-sphere>
+  <!-- Hostpot Christmas Sound -->
+  <a-sphere id="hotspotChristmasSound"
+            radius="0.10"
+            position="-1.8 2 -3"
+            material="color: #ffffff; opacity: 0.5; transparent: true"
+            animation="property: material.opacity; from: 0.1; to: 0.4; dur: 1200; dir: alternate; loop: true">
+  </a-sphere>
 
-    <a-text id="mensaje-hola"
-            value="Hola"
-            position="0 2 -3"
-            align="center"
-            color="#FFFFFF"
-            width="2"
-            visible="false">
-    </a-text>
+  <a-plane id="christmasSoundBg"
+           position="-2 2.35 -3"
+           width="1.4"
+           height="0.45"
+           material="src: #photoIntroductionBgTexture; transparent: true; opacity: 0.93; side: double;"
+           visible="false">
+  </a-plane>
 
-    <!-- 🧿 HOTSPOT 3: IR A ESCENA AR (DERECHA) -->
-    <a-sphere id="hotspot-marker"
-              class="hotspot"
-              radius="0.18"
-              color="#ff6666"
-              position="0.6 1.5 -3">
-    </a-sphere>
+  <a-entity id="christmasSoundText"
+            position="-1.8 2.35 -2.95"
+            visible="false"
+            troika-text="
+              value: ;
+              color: #1A1407;
+              align: center;
+              maxWidth: 1.2;
+              fontSize: 0.08;
+              anchor: center;
+              baseline: center;">
+  </a-entity>
 
-    <!-- Etiqueta sobre el hotspot rojo -->
-    <a-text value="Ver en RA (marker Hiro)"
-            position="0.6 1.95 -3"
-            align="center"
-            color="#FFD5D5"
-            width="2">
-    </a-text>
+  <!-- Hostpot Photo Introduction -->
+  <a-sphere id="hotspotPhotoIntroduction"
+            radius="0.10"
+            position="0 1.6 -3"
+            material="color: #ffffff; opacity: 0.5; transparent: true"
+            animation="property: material.opacity; from: 0.1; to: 0.4; dur: 1200; dir: alternate; loop: true">
+  </a-sphere>
 
-    <!-- ENTIDAD DE SONIDO -->
-    <a-entity id="sonido-entity"
-              sound="src: #audio-remoto; autoplay: false; positional: false">
-    </a-entity>
+  <a-plane id="photoIntroductionBg"
+           position="3.3 2.5 -3"
+           width="3"
+           height="2.5"
+           material="src: #photoIntroductionBgTexture; transparent: true; opacity: 0.93; side: double;"
+           visible="false">
+  </a-plane>
 
-  </a-scene>
+  <a-entity id="photoIntroductionText"
+            position="3.3 2.6 -3"
+            visible="false"
+            troika-text="
+              value: ;
+              color: #1A1407;
+              align: left;
+              maxWidth: 2.5;
+              fontSize: 0.08;
+              anchor: center;
+              baseline: center;">
+  </a-entity>
 
-  <script>
-    window.addEventListener('load', function () {
-      var hotspotSonido = document.querySelector('#hotspot-sonido');
-      var hotspotTexto  = document.querySelector('#hotspot-texto');
-      var hotspotMarker = document.querySelector('#hotspot-marker');
+  <!--  Hostpot AR Marker -->
+  <a-sphere id="hotspotMarker"
+            radius="0.18"
+            color="#ff6666"
+            position="0.6 1.5 -3">
+  </a-sphere>
 
-      var mensajeHola   = document.querySelector('#mensaje-hola');
-      var sonidoEntity  = document.querySelector('#sonido-entity');
+  <a-text value="Open AR View (Hiro marker)"
+          position="0.6 1.95 -3"
+          align="center"
+          color="#FFD5D5"
+          width="2">
+  </a-text>
+  <!-- End Hostpots -->
 
-      // Animación de escala en hover para los hotspots
-      function addHoverScale(el) {
-        el.addEventListener('mouseenter', function () {
-          el.setAttribute('scale', '1.4 1.4 1.4');
-        });
-        el.addEventListener('mouseleave', function () {
-          el.setAttribute('scale', '1 1 1');
-        });
+  <!-- Audio entities -->
+  <a-entity id="audioEntityRain"
+            sound="src: #audioRain; autoplay: false; positional: false">
+  </a-entity>
+
+  <a-entity id="audioEntityChristmasSound"
+            sound="src: #audioChristmasSound; autoplay: false; positional: false">
+  </a-entity>
+
+  <!-- Camera -->
+  <a-camera id="mainCamera" position="0 1.6 0">
+    <a-cursor color="#AE8636"></a-cursor>
+  </a-camera>
+
+</a-scene>
+
+<!-- Logic -->
+<script>
+  const scene = document.querySelector('a-scene');
+
+  scene.addEventListener('loaded', () => {
+
+    const hotspotRain = document.querySelector('#hotspotRain');
+    const hotspotChristmasSound = document.querySelector('#hotspotChristmasSound');
+    const hotspotPhotoIntroduction = document.querySelector('#hotspotPhotoIntroduction');
+    const hotspotMarker = document.querySelector('#hotspotMarker');
+
+    const audioRainEntity = document.querySelector('#audioEntityRain');
+    const audioChristmasEntity = document.querySelector('#audioEntityChristmasSound');
+
+    const photoIntroductionText = document.querySelector('#photoIntroductionText');
+    const photoIntroductionBg = document.querySelector('#photoIntroductionBg');
+    const christmasSoundText = document.querySelector('#christmasSoundText');
+    const christmasSoundBg = document.querySelector('#christmasSoundBg');
+
+    // ----------------------------
+    // 1) Unlock AudioContext
+    // ----------------------------
+    const unlockAudioContext = async () => {
+      const ctx = AFRAME.audioContext;
+      if (ctx && ctx.state !== 'running') {
+        try { await ctx.resume(); } catch (e) {}
       }
-      addHoverScale(hotspotSonido);
-      addHoverScale(hotspotTexto);
-      addHoverScale(hotspotMarker);
+    };
 
-      // 🔊 HOTSPOT 1: SONIDO
-      hotspotSonido.addEventListener('mouseenter', function () {
-        if (sonidoEntity.components.sound) {
-          sonidoEntity.components.sound.stopSound();
-          sonidoEntity.components.sound.playSound();
+    scene.addEventListener('click', unlockAudioContext, { once: true });
+    scene.addEventListener('touchstart', unlockAudioContext, { once: true });
+
+    // ----------------------------
+    // 2) Helpers (play/stop) + wait sound-loaded
+    // ----------------------------
+    const waitForSoundLoaded = (entity, timeoutMs = 8000) => {
+      return new Promise((resolve, reject) => {
+        if (!entity || !entity.components || !entity.components.sound) {
+          reject(new Error('Sound component not ready'));
+          return;
         }
-      });
 
-      hotspotSonido.addEventListener('mouseleave', function () {
-        if (sonidoEntity.components.sound) {
-          sonidoEntity.components.sound.stopSound();
+        // A-Frame sound component sets `loaded` when buffer is ready
+        if (entity.components.sound.loaded) {
+          resolve(true);
+          return;
         }
-      });
 
-      // 💬 HOTSPOT 2: TEXTO "Hola"
-      hotspotTexto.addEventListener('mouseenter', function () {
-        mensajeHola.setAttribute('visible', true);
-      });
+        const onLoaded = () => {
+          cleanup();
+          resolve(true);
+        };
 
-      hotspotTexto.addEventListener('mouseleave', function () {
-        mensajeHola.setAttribute('visible', false);
-      });
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error('Timeout waiting sound-loaded'));
+        }, timeoutMs);
 
-      // 🧿 HOTSPOT 3: ABRIR ESCENA AR POR HOVER
-      hotspotMarker.addEventListener('mouseenter', function () {
-        window.location.href = 'revive-ar.html';
+        const cleanup = () => {
+          clearTimeout(timer);
+          entity.removeEventListener('sound-loaded', onLoaded);
+        };
+
+        entity.addEventListener('sound-loaded', onLoaded);
       });
+    };
+
+    const safePlay = async (entity) => {
+      await unlockAudioContext();
+
+      // Asegura que el componente exista
+      if (!entity?.components?.sound) return;
+
+      // Espera a que esté cargado (especialmente importante para MP3)
+      try {
+        await waitForSoundLoaded(entity, 8000);
+      } catch (e) {
+        // Reintento: a veces ayuda "re-asignar" el src para forzar carga
+        const current = entity.getAttribute('sound');
+        entity.setAttribute('sound', 'src', current.src);
+        try {
+          await waitForSoundLoaded(entity, 8000);
+        } catch (e2) {
+          console.warn('Audio not loaded:', e2);
+          return;
+        }
+      }
+
+      entity.components.sound.playSound();
+    };
+
+    const safeStop = (entity) => {
+      if (entity?.components?.sound) {
+        entity.components.sound.stopSound();
+      }
+    };
+
+    // ----------------------------
+    // 3) Events
+    // ----------------------------
+    // Rain
+    hotspotRain.addEventListener('mouseenter', () => safePlay(audioRainEntity));
+    hotspotRain.addEventListener('mouseleave', () => safeStop(audioRainEntity));
+    hotspotRain.addEventListener('click', () => safePlay(audioRainEntity)); // móvil
+
+    // Christmas
+    const showChristmasPanel = (show) => {
+      christmasSoundText.setAttribute('visible', show);
+      christmasSoundBg.setAttribute('visible', show);
+    };
+
+    hotspotChristmasSound.addEventListener('mouseenter', () => {
+      safePlay(audioChristmasEntity);
+      showChristmasPanel(true);
     });
-  </script>
+    hotspotChristmasSound.addEventListener('mouseleave', () => {
+      safeStop(audioChristmasEntity);
+      showChristmasPanel(false);
+    });
+    hotspotChristmasSound.addEventListener('click', () => { // móvil
+      safePlay(audioChristmasEntity);
+      showChristmasPanel(true);
+    });
+
+    // Photo intro
+    hotspotPhotoIntroduction.addEventListener('mouseenter', () => {
+      photoIntroductionText.setAttribute('visible', true);
+      photoIntroductionBg.setAttribute('visible', true);
+    });
+    hotspotPhotoIntroduction.addEventListener('mouseleave', () => {
+      photoIntroductionText.setAttribute('visible', false);
+      photoIntroductionBg.setAttribute('visible', false);
+    });
+    hotspotPhotoIntroduction.addEventListener('click', () => { // móvil
+      photoIntroductionText.setAttribute('visible', true);
+      photoIntroductionBg.setAttribute('visible', true);
+    });
+
+    // Marker
+    hotspotMarker.addEventListener('mouseenter', () => {
+      window.location.href = 'revive-ar.html';
+    });
+    hotspotMarker.addEventListener('click', () => { // móvil
+      window.location.href = 'revive-ar.html';
+    });
+
+    // ----------------------------
+    // 4) Text content
+    // ----------------------------
+    const photoIntroductionTextTroika =
+      "Era 1953. La lluvia caía sin descanso y el invierno helaba las calles, " +
+      "pero esta casa humilde era un refugio.\n\n" +
+      "Teodoro y María, rodeados de lo poco que tenían, " +
+      "les regalaban a sus hijos algo inmensamente grande: amor, cuidado y cariño.\n\n" +
+      "El padre cortó un árbol que los niños adornaron con motivos navideños hechos a mano, " +
+      "y la madre tejió unos calcetines donde, al llegar la noche, dejarían algunos caramelos para sus hijos.\n\n" +
+      "Aquí no había abundancia material, pero sí lo suficiente para que la felicidad creciera, sencilla y honesta, " +
+      "como una estrella que no cambia el cielo, pero guía el camino.\n\n" +
+      "Teresa, Lola y Tomás eran felices porque tenían lo más importante: el amor de sus padres.";
+
+    photoIntroductionText.setAttribute('troika-text', 'value', photoIntroductionTextTroika);
+
+    const christmasSoundTextTroika =
+      "En casa de Teodoro y María siempre había música. Incluso en los días más difíciles, " +
+      "las canciones llenaban la estancia y hacían más cálido el invierno. " +
+      "Y cuando llegaba la Navidad, los villancicos no podían faltar: " +
+      "eran una forma sencilla de celebrar juntos, de recordar que la alegría también se comparte.";
+
+    christmasSoundText.setAttribute('troika-text', 'value', christmasSoundTextTroika);
+
+  });
+</script>
 </body>
 </html>
