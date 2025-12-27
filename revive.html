@@ -11,31 +11,6 @@
   <!-- Troika Text: high-quality text rendering with real fonts (supports accents and Unicode) -->
   <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const textEl = document.querySelector('#reviveIntroText');
-      if (!textEl) return;
-
-      const text =
-        "Adéntrate en este libro.\n" +
-        "Cada página guarda un recuerdo;\n" +
-        "cada recuerdo puede volver a habitarse.\n\n" +
-        "Este libro no se lee:\n" +
-        "se atraviesa.";
-
-      // Troika uses the "troika-text" component
-      textEl.setAttribute('troika-text', 'value', text);
-    });
-
-    AFRAME.registerComponent('go-to-vr', {
-      schema: { url: { type: 'string' } },
-      init: function () {
-        this.el.addEventListener('click', () => {
-          window.location.href = this.data.url;
-        });
-      }
-    });
-  </script>
   <style>
     :root {
       --text-color-primary: #AE8636;
@@ -69,7 +44,7 @@
       <img id="vintageBookCover" src="resources/ph-cover-texture.jpg" />
       <img id="photoPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
     </a-assets>
-    <!-- Emd Assets -->
+    <!-- End Assets -->
 
     <!-- Scene background -->
     <a-sky src="#vintageBookCover" rotation="180 -90 90"></a-sky>
@@ -126,6 +101,34 @@
     <!--End Camera -->
   </a-scene>
   <!--End Scene -->
+
+
+  <!-- JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const textEl = document.querySelector('#reviveIntroText');
+      if (!textEl) return;
+
+      const text =
+        "Adéntrate en este libro.\n" +
+        "Cada página guarda un recuerdo;\n" +
+        "cada recuerdo puede volver a habitarse.\n\n" +
+        "Este libro no se lee:\n" +
+        "se atraviesa.";
+
+      // Troika uses the "troika-text" component
+      textEl.setAttribute('troika-text', 'value', text);
+    });
+
+    AFRAME.registerComponent('go-to-vr', {
+      schema: { url: { type: 'string' } },
+      init: function () {
+        this.el.addEventListener('click', () => {
+          window.location.href = this.data.url;
+        });
+      }
+    });
+  </script>
 
 </body>
 
