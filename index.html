@@ -41,12 +41,12 @@
     <a-assets>
       <a-asset-item id="vintageBook-obj" src="resources/photo-album.obj"></a-asset-item>
       <a-asset-item id="vintageBook-mtl" src="resources/photo-album.mtl"></a-asset-item>
-      <img id="vintageBookCover" src="resources/ph-cover-texture.jpg" />
-      <img id="photoPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
+      <img id="imgCoverTexture" src="resources/ph-cover-texture.jpg" />
+      <img id="imgPhotoPreview" src="resources/img-revive-source.png" crossorigin="anonymous" />
     </a-assets>
 
     <!-- Scene background -->
-    <a-sky src="#vintageBookCover" rotation="180 -90 90"></a-sky>
+    <a-sky src="#imgCoverTexture" rotation="180 -90 90"></a-sky>
 
     <!-- Lights -->
     <a-light type="ambient" intensity="0.75" color="#fff;"></a-light>
@@ -83,8 +83,12 @@
         position="0.26 1.54 -0.99" rotation="-40 0 0">
       </a-entity>
       <a-plane id="photoAlbumPhoto" class="clickable" go-to-vr="url: revive-vr.html" position="0.3 1.40 -1"
-        rotation="-40 0 0" width="1.6" height="0.9" scale="0.28 0.28 0.28" material="shader: flat; src: #photoPreview;"
+        rotation="-40 0 0" width="1.6" height="0.9" scale="0.28 0.28 0.28" material="shader: flat; src: #imgPhotoPreview;"
         side="double">
+        <a-sphere class="clickable" radius="0.20" 
+            material="color: #AE8636; opacity: 0.5; transparent: true"
+            animation="property: material.opacity; from: 0.1; to: 0.8; dur: 1200; dir: alternate; loop: true">
+      </a-sphere>
       </a-plane>
     </a-entity>
 
