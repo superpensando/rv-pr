@@ -223,11 +223,10 @@
         </a-entity>
 
         <!--  hotspot AR Marker -->
-        <a-sphere id="hotspotMarker" visible="false" radius="0.10" color="#ff6666">
+        <a-sphere id="hotspotMarker" visible="false" radius="0.10" position="0 0 -3"
+            material="color: #000; opacity: 0.5; transparent: true"
+            animation="property: material.opacity; from: 0.1; to: 0.4; dur: 1200; dir: alternate; loop: true">
         </a-sphere>
-
-        <a-text value="Open AR View (Hiro marker)" position="0.6 1.95 -3" align="center" color="#FFD5D5" width="2">
-        </a-text>
         <!-- End hotspot -->
 
         <!-- Camera -->
