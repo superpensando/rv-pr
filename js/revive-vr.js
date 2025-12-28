@@ -116,9 +116,11 @@
                         case "hotspotFireplaceFire":
                             hotspot.addEventListener("mouseenter", () => {
                                 safePlay(entityFireplaceFire);
+                                entityFireplaceFire.setAttribute("visible", true);
                             });
                             hotspot.addEventListener("mouseleave", () => {
                                 safeStop(entityFireplaceFire);
+                                entityFireplaceFire.setAttribute("visible", false);
                             });
                             break;
 
@@ -258,6 +260,20 @@
             "troika-text",
             "value",
             entityRainBellsTextTroika
+            );
+
+            // Fireplace Fire Text
+            const entityFireplaceFireText = document.querySelector(
+            "#entityFireplaceFireText"
+            );
+
+            const entityFireplaceFireTextTroika =
+             "En las noches de frío invernal, la chimenea encendida reunía a la familia en conversaciones sencillas y cercanas.";
+
+            entityFireplaceFireText.setAttribute(
+            "troika-text",
+            "value",
+            entityFireplaceFireTextTroika
             );
 
 
