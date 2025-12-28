@@ -17,38 +17,3 @@ body {
   color: var(--text-color-tertiary);
   overflow: hidden;
 }
-
-/* Back button (AR & VR) */
-#ui-back {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-  background: var(--background-color-secondary);
-  color: var(--text-color-primary);
-  padding: 6px 10px;
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 1.2;
-  border-radius: 2px;
-  user-select: none;
-}
-
-/* Loading overlay (used by revive-ar.js) */
-#app-loading {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--background-color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-#app-loading.hide {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 250ms ease;
-}
-
