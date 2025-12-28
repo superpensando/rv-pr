@@ -1,3 +1,8 @@
+/* ==========================================================================
+   ReVive AR – JS 
+   ========================================================================== */
+
+
 window.addEventListener("load", function () {
 
   // Scene 
@@ -20,7 +25,7 @@ window.addEventListener("load", function () {
   function unlockAudio() {
     var ctx = window.AFRAME && AFRAME.audioContext;
     if (ctx && ctx.state !== "running") {
-      ctx.resume().catch(function () {});
+      ctx.resume().catch(function () { });
     }
     window.removeEventListener("touchstart", unlockAudio);
     window.removeEventListener("click", unlockAudio);

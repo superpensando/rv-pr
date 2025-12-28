@@ -1,19 +1,30 @@
-/* Back button (AR & VR) */
+/* ==========================================================================
+   ReVive AR – UI Overlay Styles
+   ========================================================================== */
+
+/* Back button */
 #reviveBack {
   position: absolute;
   top: 10px;
   left: 10px;
   z-index: 10;
+
+  /* Visual style */
   background: var(--background-color-secondary);
   color: var(--text-color-primary);
+
   padding: 6px 10px;
   cursor: pointer;
+
+  /* Typography */
   font-size: 12px;
   line-height: 1.2;
+
   border-radius: 2px;
   user-select: none;
 }
 
+/* AR message / instruction panel */
 #reviveMessage {
   position: fixed;
   left: 50%;
@@ -21,26 +32,28 @@
   transform: translateX(-50%);
   z-index: 20;
 
+  /* Panel size and spacing */
   width: 280px;
   padding: 18px 20px;
 
+  /* Visual style */
   background: #f4efe6;
   color: var(--text-color-secondary);
 
+  /* Text */
   font-size: 14px;
   line-height: 1.4;
   text-align: center;
 
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-
   opacity: 0.93;
 
-  /* subtle pulse like the A-Frame plane */
+  /* Subtle pulse animation, aligned with A-Frame content */
   animation: revivePulse 1.8s ease-in-out infinite;
 }
 
-/* Pulse animation (equivalent to your A-Frame opacity animation) */
+/* Pulse animation for AR message */
 @keyframes revivePulse {
   0% {
     opacity: 0.75;
@@ -56,8 +69,8 @@
   }
 }
 
-
+/* A-Frame canvas full viewport */
 .a-canvas {
-   width:100%;
-   height:100vh;
+  width: 100%;
+  height: 100vh;
 }
