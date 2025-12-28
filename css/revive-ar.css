@@ -1,0 +1,63 @@
+/* Back button (AR & VR) */
+#reviveBack {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: var(--background-color-secondary);
+  color: var(--text-color-primary);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.2;
+  border-radius: 2px;
+  user-select: none;
+}
+
+#reviveMessage {
+  position: fixed;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  z-index: 20;
+
+  width: 280px;
+  padding: 18px 20px;
+
+  background: #f4efe6;
+  color: var(--text-color-secondary);
+
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+  opacity: 0.93;
+
+  /* subtle pulse like the A-Frame plane */
+  animation: revivePulse 1.8s ease-in-out infinite;
+}
+
+/* Pulse animation (equivalent to your A-Frame opacity animation) */
+@keyframes revivePulse {
+  0% {
+    opacity: 0.75;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.03);
+  }
+  100% {
+    opacity: 0.75;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+
+.a-canvas {
+   width:100%;
+   height:100vh;
+}

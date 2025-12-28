@@ -1,107 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>ReVive – AR Hiro</title>
+  <meta charset="UTF-8" />
+  <title>Christmas 1953 · AR Scene</title>
 
-  <!--  A-FRAME  + AR.js Libraries-->
+  <!-- General styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/revive-ar.css" />
+
+  <!-- A-FRAME Library -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+  <!-- Troika Text -->
+  <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
+
+  <!-- AR.JS Library (must be loaded BEFORE the scene) -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
-
-  <style>
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #4a3c29; /* Color que verás mientras “piensa” */
-    }
-
-    #ui-back {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 10;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-  </style>
 </head>
 
 <body>
-  <!-- Botón para volver a la RV -->
-  <div id="ui-back" onclick="window.location.href='revive-vr.html'">
-    ← Volver a la escena 360
+
+  <!-- Back UI -->
+  <div id="reviveBack" onclick="window.location.href='revive-vr.html'">
+    ← Volver a Navidades 1953 VR
   </div>
 
-  <!-- Escena AR.js -->
+  <!-- Intro message -->
+  <div id="reviveMessage">
+    Apunta la cámara al marcador HIRO incluido en el kit y deja que la música devuelva este recuerdo a la vida.
+  </div>
+
+  <!-- Scene -->
   <a-scene
     embedded
     vr-mode-ui="enabled: false"
+    loading-screen="enabled: false"
     renderer="alpha: true; logarithmicDepthBuffer: true"
     arjs="sourceType: webcam; debugUIEnabled: false;">
 
+    <!-- Assets -->
     <a-assets>
-      <!-- Imagen que quieres mostrar cuando se detecte el marker Hiro -->
-      <img id="img-revive" src="resources/img-revive-source.png">
-
-      <!-- Música (puedes usar la misma URL o archivo que en la otra página) -->
-      <!-- Ejemplo: misma que en la escena VR, o bien un mp3 local -->
-      <audio id="audio-recuerdo" crossorigin="anonymous"
-             src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav"></audio>
-      <!-- Si tienes un archivo local, sería algo como:
-      <audio id="audio-recuerdo" src="resources/mi-musica.mp3"></audio>
-      -->
+      <img id="imgCoverTexture" src="resources/ph-cover-texture.jpg" />
+      <img id="imgRevive" src="resources/img-revive-source.png" />
+      <img id="imgPageTexture" src="resources/ph-page-texture.jpg" />
+      <audio id="audioChristmasSong" src="resources/audios/eltamborilero.mp3"></audio>
     </a-assets>
 
-    <!-- Marker Hiro: cuando la cámara detecta el patrón, se muestra el contenido -->
+    <!-- Marker Hiro -->
     <a-marker id="hiroMarker" preset="hiro">
-      <!-- Imagen plana encima del marcador -->
+
+      <!-- Image plane attached to the marker -->
       <a-plane
-        src="#img-revive"
         width="1.5"
         height="1"
         position="0 0.5 0"
-        rotation="-90 0 0"
-        material="transparent: true;">
+        rotation="-90 180 0"
+        material="src: #imgRevive; transparent: true;">
       </a-plane>
 
-      <!-- Entidad de sonido asociada al marker (no visible) -->
-      <a-entity id="audio-entity"
-                sound="src: #audio-recuerdo; autoplay: false; positional: false">
+      <!-- Audio entity (played on markerFound in JS) -->
+      <a-entity
+        id="entityChristmasSound"
+        sound="src: #audioChristmasSong; autoplay: false; positional: false">
       </a-entity>
+
     </a-marker>
 
-    <!-- Cámara de AR.js -->
+    <!-- Camera -->
     <a-entity camera></a-entity>
+
   </a-scene>
 
-  <script>
-    window.addEventListener('load', function () {
-      var marker = document.querySelector('#hiroMarker');
-      var audioEntity = document.querySelector('#audio-entity');
+  <!-- JS -->
+  <script src="js/revive-ar.js"></script>
 
-      // Cuando el marker Hiro se detecta → reproducir música
-      marker.addEventListener('markerFound', function () {
-        if (audioEntity.components.sound) {
-          audioEntity.components.sound.stopSound();
-          audioEntity.components.sound.playSound();
-        }
-      });
-
-      // Cuando se pierde el marker → parar música
-      marker.addEventListener('markerLost', function () {
-        if (audioEntity.components.sound) {
-          audioEntity.components.sound.stopSound();
-        }
-      });
-    });
-  </script>
 </body>
 </html>
