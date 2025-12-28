@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <title>Christmas 1953 · AR Scene</title>
@@ -27,16 +28,12 @@
 
   <!-- Intro message -->
   <div id="reviveMessage">
-    Apunta la cámara al marcador HIRO incluido en el kit y deja que la música devuelva este recuerdo a la vida.
-  </div>
+    Apunta la cámara al marcador HIRO incluido en el kit y deja que la música traiga de nuevo este recuerdo familiar:
+    tus abuelos Teodoro y María, tu madre Teresa y tus tíos Lola y Tomás, y celebra con ellos la Navidad de 1953.</div>
 
   <!-- Scene -->
-  <a-scene
-    embedded
-    vr-mode-ui="enabled: false"
-    loading-screen="enabled: false"
-    renderer="alpha: true; logarithmicDepthBuffer: true"
-    arjs="sourceType: webcam; debugUIEnabled: false;">
+  <a-scene embedded vr-mode-ui="enabled: false" loading-screen="enabled: false"
+    renderer="alpha: true; logarithmicDepthBuffer: true" arjs="sourceType: webcam; debugUIEnabled: false;">
 
     <!-- Assets -->
     <a-assets>
@@ -50,18 +47,12 @@
     <a-marker id="hiroMarker" preset="hiro">
 
       <!-- Image plane attached to the marker -->
-      <a-plane
-        width="1.5"
-        height="1"
-        position="0 0.5 0"
-        rotation="-90 180 0"
+      <a-plane width="1.5" height="1" position="0 0.5 0" rotation="-90 180 0"
         material="src: #imgRevive; transparent: true;">
       </a-plane>
 
       <!-- Audio entity (played on markerFound in JS) -->
-      <a-entity
-        id="entityChristmasSound"
-        sound="src: #audioChristmasSong; autoplay: false; positional: false">
+      <a-entity id="entityChristmasSound" sound="src: #audioChristmasSong; autoplay: false; positional: false">
       </a-entity>
 
     </a-marker>
@@ -75,4 +66,5 @@
   <script src="js/revive-ar.js"></script>
 
 </body>
+
 </html>

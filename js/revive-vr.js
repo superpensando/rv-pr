@@ -224,7 +224,7 @@ scene.addEventListener("loaded", () => {
         "En casa de Teodoro y María siempre había música. Incluso en los días más difíciles, " +
         "las canciones llenaban la estancia y hacían más cálido el invierno.\n\n" +
         "Y cuando llegaba la Navidad, los villancicos no podían faltar: " +
-        "eran una forma sencilla de celebrar juntos, de recordar que la alegría también se comparte.";
+        "eran una forma sencilla de celebrar juntos, de recordar la alegría compartida.";
 
     entityChristmasSoundText.setAttribute(
         "troika-text",

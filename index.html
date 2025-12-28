@@ -65,12 +65,11 @@
         position="0.26 1.54 -0.99" rotation="-40 0 0">
       </a-entity>
       <a-plane id="photoAlbumPhoto" class="clickable" go-to-vr="url: revive-vr.html" position="0.3 1.40 -1"
-        rotation="-40 0 0" width="1.6" height="0.9" scale="0.28 0.28 0.28" material="shader: flat; src: #imgPhotoPreview;"
-        side="double">
-        <a-sphere class="clickable" radius="0.20" 
-            material="color: #AE8636; opacity: 0.5; transparent: true"
-            animation="property: material.opacity; from: 0.1; to: 0.8; dur: 1200; dir: alternate; loop: true">
-      </a-sphere>
+        rotation="-40 0 0" width="1.6" height="0.9" scale="0.28 0.28 0.28"
+        material="shader: flat; src: #imgPhotoPreview;" side="double">
+        <a-sphere class="clickable" radius="0.20" material="color: #AE8636; opacity: 0.5; transparent: true"
+          animation="property: material.opacity; from: 0.1; to: 0.8; dur: 1200; dir: alternate; loop: true">
+        </a-sphere>
       </a-plane>
     </a-entity>
 
@@ -85,7 +84,7 @@
 
   <!--JS-->
   <script src="js/revive.js"></script>
-  
+
 </body>
 
 </html>
